@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rb_image_bucket/main_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,6 +15,11 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return MaterialApp(
+      theme: ThemeData.light(
+        useMaterial3: true,
+      ),
+      home: MainScreen(),
+    );
   }
 }
