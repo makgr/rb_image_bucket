@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatefulWidget {
@@ -8,7 +9,22 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  void getData() {}
+  Future<void> getData() async {
+    try {
+      Response response = await Dio().get(
+          "https:3//flutterapitest-8d075-default-rtdb.asia-southeast1.firebasedatabase.app/bucketlist.json");
+      print(response.data);
+    } catch (e) {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text(
+                  "Can not connect to the server. Try again after some time."),
+            );
+          });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
