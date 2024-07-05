@@ -11,13 +11,21 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   List<dynamic> imageBucketListData = [];
 
+  bool isLoading = false;
+
   Future<void> getData() async {
+    setState(() {
+      isLoading = true;
+    });
     try {
       Response response = await Dio().get(
           "https://flutterapitest-8d075-default-rtdb.asia-southeast1.firebasedatabase.app/bucketlist.json");
       imageBucketListData = response.data;
+      isLoading = false;
       setState(() {});
     } catch (e) {
+      isLoading = false;
+      setState(() {});
       showDialog(
           context: context,
           builder: (context) {
@@ -30,17 +38,34 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   @override
+  void initState() {
+    getData();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Rb Image Bucket"),
         centerTitle: true,
+        actions: [
+          InkWell(
+            onTap: getData,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Icon(Icons.refresh),
+            ),
+          ),
+        ],
       ),
-      body: Column(
-        children: [
-          ElevatedButton(onPressed: getData, child: Text("Get Data")),
-          Expanded(
-            child: ListView.builder(
+      body: RefreshIndicator(
+        onRefresh: () async {
+          getData();
+        },
+        child: isLoading
+            ? Center(child: CircularProgressIndicator())
+            : ListView.builder(
                 itemCount: imageBucketListData.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Padding(
@@ -59,8 +84,6 @@ class _MainScreenState extends State<MainScreen> {
                     ),
                   );
                 }),
-          ),
-        ],
       ),
     );
   }
