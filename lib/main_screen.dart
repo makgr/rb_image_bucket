@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:rb_image_bucket/add_image_bucket_list.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -84,6 +85,17 @@ class _MainScreenState extends State<MainScreen> {
                     ),
                   );
                 }),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return AddImageBucketList();
+          }));
+        },
+        backgroundColor: Colors.amber,
+        child: Icon(
+          Icons.add,
+        ),
       ),
     );
   }
