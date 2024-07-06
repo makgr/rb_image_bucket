@@ -23,7 +23,12 @@ class _MainScreenState extends State<MainScreen> {
     try {
       Response response = await Dio().get(
           "https://flutterapitest-8d075-default-rtdb.asia-southeast1.firebasedatabase.app/bucketlist.json");
-      imageBucketListData = response.data;
+
+      if (response.data is List) {
+        imageBucketListData = response.data;
+      } else {
+        imageBucketListData = [];
+      }
       isLoading = false;
       isError = false;
       setState(() {});
@@ -112,7 +117,9 @@ class _MainScreenState extends State<MainScreen> {
             ? Center(child: CircularProgressIndicator())
             : isError
                 ? errorWidget(errorText: "Error connecting..")
-                : listDataWidget(),
+                : imageBucketListData.length < 1
+                    ? Center(child: Text("No data found."))
+                    : listDataWidget(),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
