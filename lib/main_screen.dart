@@ -68,27 +68,33 @@ class _MainScreenState extends State<MainScreen> {
         itemBuilder: (BuildContext context, int index) {
           return Padding(
             padding: const EdgeInsets.all(8.0),
-            child: ListTile(
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return ViewItem(
-                    title: imageBucketListData[index]['item'] ?? "N/A",
-                    image: imageBucketListData[index]['image'] ??
-                        "https://scontent.fdac14-1.fna.fbcdn.net/v/t39.30808-6/428629326_3624898381084843_3442857291648613134_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=z-A-PwcH2ioQ7kNvgEQDL4c&_nc_ht=scontent.fdac14-1.fna&oh=00_AYDpxfJk64oKZbWOKgHcAQuzyhJhLB3Kl-NmTmO69RNE9w&oe=668E20C5",
-                  );
-                }));
-              },
-              leading: CircleAvatar(
-                backgroundImage: NetworkImage(imageBucketListData[index]
-                        ['image'] ??
-                    "https://scontent.fdac14-1.fna.fbcdn.net/v/t39.30808-6/428629326_3624898381084843_3442857291648613134_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=z-A-PwcH2ioQ7kNvgEQDL4c&_nc_ht=scontent.fdac14-1.fna&oh=00_AYDpxfJk64oKZbWOKgHcAQuzyhJhLB3Kl-NmTmO69RNE9w&oe=668E20C5"),
-              ),
-              title: Text(imageBucketListData[index]['item'] ?? "N/A"),
-              trailing: Text(
-                imageBucketListData[index]['cost'].toString(),
-                style: TextStyle(fontSize: 15),
-              ),
-            ),
+            child: (imageBucketListData[index] is Map)
+                ? ListTile(
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return ViewItem(
+                          title: imageBucketListData[index]['item'] ?? "N/A",
+                          image: imageBucketListData[index]['image'] ??
+                              "https://scontent.fdac14-1.fna.fbcdn.net/v/t39.30808-6/428629326_3624898381084843_3442857291648613134_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=z-A-PwcH2ioQ7kNvgEQDL4c&_nc_ht=scontent.fdac14-1.fna&oh=00_AYDpxfJk64oKZbWOKgHcAQuzyhJhLB3Kl-NmTmO69RNE9w&oe=668E20C5",
+                          index: index,
+                        );
+                      })).then((value) {
+                        getData();
+                      });
+                    },
+                    leading: CircleAvatar(
+                      backgroundImage: NetworkImage(imageBucketListData[index]
+                              ?['image'] ??
+                          "https://scontent.fdac14-1.fna.fbcdn.net/v/t39.30808-6/428629326_3624898381084843_3442857291648613134_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=z-A-PwcH2ioQ7kNvgEQDL4c&_nc_ht=scontent.fdac14-1.fna&oh=00_AYDpxfJk64oKZbWOKgHcAQuzyhJhLB3Kl-NmTmO69RNE9w&oe=668E20C5"),
+                    ),
+                    title: Text(imageBucketListData[index]?['item'] ?? "N/A"),
+                    trailing: Text(
+                      imageBucketListData[index]?['cost'].toString() ?? '0',
+                      style: TextStyle(fontSize: 15),
+                    ),
+                  )
+                : SizedBox(),
           );
         });
   }
