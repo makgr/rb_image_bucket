@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:rb_image_bucket/add_image_bucket_list.dart';
 import 'package:rb_image_bucket/main_screen.dart';
 
 void main() {

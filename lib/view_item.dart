@@ -21,7 +21,20 @@ class _ViewItemState extends State<ViewItem> {
     try {
       Response response = await Dio().delete(
           "https://flutterapitest-8d075-default-rtdb.asia-southeast1.firebasedatabase.app/bucketlist/${widget.index}.json");
-      Navigator.pop(context);
+      Navigator.pop(context, "refresh");
+    } catch (e) {
+      print("error");
+    }
+  }
+
+  Future<void> markAsComplete() async {
+    try {
+      Map<String, dynamic> data = {"completed": true};
+
+      Response response = await Dio().patch(
+          "https://flutterapitest-8d075-default-rtdb.asia-southeast1.firebasedatabase.app/bucketlist/${widget.index}.json",
+          data: data);
+      Navigator.pop(context, "refresh");
     } catch (e) {
       print("error");
     }
@@ -32,7 +45,7 @@ class _ViewItemState extends State<ViewItem> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("${widget.title}"),
+        title: Text(widget.title),
         actions: [
           PopupMenuButton(onSelected: (value) {
             if (value == 1) {
@@ -55,6 +68,9 @@ class _ViewItemState extends State<ViewItem> {
                       ],
                     );
                   });
+            }
+            if (value == 2) {
+              markAsComplete();
             }
           }, itemBuilder: (context) {
             return [
