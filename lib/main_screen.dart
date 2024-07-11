@@ -72,11 +72,11 @@ class _MainScreenState extends State<MainScreen> {
         : ListView.builder(
             itemCount: imageBucketListData.length,
             itemBuilder: (BuildContext context, int index) {
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: (imageBucketListData[index] is Map &&
-                        (!imageBucketListData[index]?["completed"] ?? false))
-                    ? ListTile(
+              return (imageBucketListData[index] is Map &&
+                      (!imageBucketListData[index]?["completed"] ?? false))
+                  ? Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ListTile(
                         onTap: () {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
@@ -104,9 +104,9 @@ class _MainScreenState extends State<MainScreen> {
                           imageBucketListData[index]?['cost'].toString() ?? '0',
                           style: TextStyle(fontSize: 15),
                         ),
-                      )
-                    : SizedBox(),
-              );
+                      ),
+                    )
+                  : SizedBox();
             });
   }
 
@@ -139,8 +139,14 @@ class _MainScreenState extends State<MainScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return AddImageBucketList();
-          }));
+            return AddImageBucketList(
+              newIndex: imageBucketListData.length,
+            );
+          })).then((value) {
+            if (value == "refresh") {
+              getData();
+            }
+          });
         },
         backgroundColor: Colors.amber,
         child: Icon(
