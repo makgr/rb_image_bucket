@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rb_image_bucket/main_screen.dart';
+import 'package:rb_image_bucket/screens/main_screen.dart';
 
 void main() {
   runApp(const MyApp());

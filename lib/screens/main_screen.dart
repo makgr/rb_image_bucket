@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
-import 'package:rb_image_bucket/add_image_bucket_list.dart';
-import 'package:rb_image_bucket/view_item.dart';
+import 'package:rb_image_bucket/screens/add_image_bucket_list_screen.dart';
+import 'package:rb_image_bucket/screens/view_item_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});

@@ -85,7 +85,6 @@ class _ViewItemState extends State<ViewItem> {
       ),
       body: Column(
         children: [
-          Text(widget.index.toString()),
           Container(
             height: 300,
             width: double.infinity,
