@@ -48,8 +48,14 @@ class _AddImageBucketListState extends State<AddImageBucketList> {
           child: Column(
             children: [
               TextFormField(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 validator: (value) {
-                  
+                  if (value.toString().length < 3) {
+                    return "Must be greater than 3 character.";
+                  }
+                  if (value == null || value.isEmpty) {
+                    return "This field must not be empty.";
+                  }
                 },
                 controller: itemText,
                 decoration: InputDecoration(
@@ -60,6 +66,15 @@ class _AddImageBucketListState extends State<AddImageBucketList> {
                 height: 30,
               ),
               TextFormField(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                validator: (value) {
+                  if (value.toString().length < 3) {
+                    return "Must be greater than 3 character.";
+                  }
+                  if (value == null || value.isEmpty) {
+                    return "This field must not be empty.";
+                  }
+                },
                 controller: costText,
                 decoration: InputDecoration(
                   label: Text("Cost"),
@@ -69,6 +84,15 @@ class _AddImageBucketListState extends State<AddImageBucketList> {
                 height: 30,
               ),
               TextFormField(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                validator: (value) {
+                  if (value.toString().length < 3) {
+                    return "Must be greater than 3 character.";
+                  }
+                  if (value == null || value.isEmpty) {
+                    return "This field must not be empty.";
+                  }
+                },
                 controller: imageText,
                 decoration: InputDecoration(
                   label: Text("Image Link"),
@@ -81,7 +105,11 @@ class _AddImageBucketListState extends State<AddImageBucketList> {
                 children: [
                   Expanded(
                     child: ElevatedButton(
-                      onPressed: addImage,
+                      onPressed: () {
+                        if (addForm.currentState!.validate()) {
+                          addImage();
+                        }
+                      },
                       child: Text("Add Image"),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.amber,
