@@ -10,13 +10,16 @@ class AddImageBucketList extends StatefulWidget {
 }
 
 class _AddImageBucketListState extends State<AddImageBucketList> {
+  TextEditingController itemText = TextEditingController();
+  TextEditingController costText = TextEditingController();
+  TextEditingController imageText = TextEditingController();
+
   Future<void> addImage() async {
     try {
       Map<String, dynamic> data = {
-        "item": "amazing coxsbazar",
-        "cost": 6000,
-        "image":
-            "https://images.unsplash.com/photo-1619177383949-f03975e50b19?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        "item": itemText.text,
+        "cost": costText.text,
+        "image": imageText.text,
         "completed": false
       };
 
@@ -31,12 +34,66 @@ class _AddImageBucketListState extends State<AddImageBucketList> {
 
   @override
   Widget build(BuildContext context) {
+    var addForm = GlobalKey<FormState>();
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: Text("Add Image in Bucket"),
       ),
-      body: ElevatedButton(onPressed: addImage, child: Text("Add Image")),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Form(
+          key: addForm,
+          child: Column(
+            children: [
+              TextFormField(
+                validator: (value) {
+                  
+                },
+                controller: itemText,
+                decoration: InputDecoration(
+                  label: Text("Item"),
+                ),
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              TextFormField(
+                controller: costText,
+                decoration: InputDecoration(
+                  label: Text("Cost"),
+                ),
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              TextFormField(
+                controller: imageText,
+                decoration: InputDecoration(
+                  label: Text("Image Link"),
+                ),
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: addImage,
+                      child: Text("Add Image"),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.amber,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
